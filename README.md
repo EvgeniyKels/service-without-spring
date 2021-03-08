@@ -1,2 +1,2 @@
 # service-without-spring
-Service without spring fraemwork with mongo
+Service without spring fraemwork. Main db - mongo
