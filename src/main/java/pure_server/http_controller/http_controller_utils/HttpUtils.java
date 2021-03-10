@@ -10,17 +10,21 @@ import static pure_server.config.constants.HttpControllerConstants.NON_SUCCESS;
 import static pure_server.config.constants.HttpControllerConstants.SUCCESS;
 
 public class HttpUtils {
-//    private final Logger LOGGER = Logger.getLogger(this.getClass().getSimpleName());
-//    private final ObjectMapper objectMapper;
     public HttpUtils(ObjectMapper objectMapper) {
-//        this.objectMapper = objectMapper;
     }
-    public void addSuccessStringToResponse(BookResponseDto.BookResponseBuilder bookResponseBuilder, boolean result) {
-        if (result) {
+    public void addSuccessStringToResponse(BookResponseDto.BookResponseBuilder bookResponseBuilder, Object result) {
+        if(result instanceof Boolean) {
+            if ((Boolean) result) {
+                bookResponseBuilder.addTextResult(SUCCESS);
+            } else {
+                bookResponseBuilder.addTextResult(NON_SUCCESS);
+            }
+        } else if (result instanceof String) {
             bookResponseBuilder.addTextResult(SUCCESS);
-        } else {
+        } else if (result == null) {
             bookResponseBuilder.addTextResult(NON_SUCCESS);
         }
+
     }
 
     public void handleSuccess(HttpExchange exchange, String body) throws IOException {

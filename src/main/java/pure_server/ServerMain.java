@@ -1,10 +1,14 @@
 package pure_server;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.client.MongoDatabase;
 import com.sun.net.httpserver.HttpServer;
-import pure_server.config.IPropertiesReader;
-import pure_server.config.MongoConfig;
-import pure_server.config.PropertiesReader;
+import pure_server.config.context.AppContext;
+import pure_server.config.properties_reader.IPropertiesReader;
+import pure_server.config.context.MongoConfig;
+import pure_server.config.properties_reader.PropertiesReader;
+import pure_server.config.context.RepositoryLinksHolder;
 import pure_server.http_controller.HttpController;
 import pure_server.service.BookService;
 
@@ -15,26 +19,27 @@ import java.util.logging.Logger;
 
 import static pure_server.config.constants.PropertiesConstant.*;
 
-
 public class ServerMain {
     private static final Logger LOGGER = Logger.getLogger(ServerMain.class.getSimpleName());
     public static void main(String[] args) {
-        IPropertiesReader propertiesReader = new PropertiesReader();
-        Properties properties = propertiesReader.receiveInitialProperties();
 
-        MongoConfig mongoConfig = MongoConfig.getInstance(properties.getProperty(DB_HOST), Integer.parseInt(properties.getProperty(DB_PORT)));
-        MongoDatabase authDb = mongoConfig.getAuthDb(properties.getProperty(DB_USER_NAME), properties.getProperty(AUTH_DB_NAME), properties.getProperty(PASS));
+        AppContext appContext = AppContext.getInstance();
 
         HttpServer server = null;
 
         try {
-             server = HttpServer.create(new InetSocketAddress(Integer.parseInt(properties.getProperty(SERVER_PORT))), 0);
+             server = HttpServer.create(new InetSocketAddress(appContext.getPort()), 0);
              LOGGER.info("server started");
         } catch (IOException e) {
             LOGGER.info("server failed: " + e.getLocalizedMessage());
         }
 
-        HttpController httpController = new HttpController(server, new BookService(), authDb);
+        HttpController httpController = new HttpController(
+                server,
+                new BookService(
+                        appContext.getBookCollectionRepo()),
+                appContext.getUserCollectionRepo(),
+                appContext.getOm());
 
         server.setExecutor(null);
         server.start();

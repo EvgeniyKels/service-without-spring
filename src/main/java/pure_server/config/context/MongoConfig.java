@@ -1,4 +1,4 @@
-package pure_server.config;
+package pure_server.config.context;
 
 import com.mongodb.MongoClient;
 import com.mongodb.MongoCredential;
@@ -19,7 +19,7 @@ public class MongoConfig {
         return mongoConfig;
     }
 
-    public MongoDatabase getAuthDb(String userName, String databaseName, String pass) {
+    public MongoDatabase getDb(String userName, String databaseName, String pass) {
         if(userName != null && pass != null) {
             MongoCredential.createCredential(userName, databaseName, pass.toCharArray());
         }

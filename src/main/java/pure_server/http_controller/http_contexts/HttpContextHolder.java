@@ -5,7 +5,7 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import pure_server.http_controller.http_controller_utils.HttpUtils;
 import pure_server.http_controller.http_controller_utils.ParseUtils;
-import pure_server.model.dto.Book;
+import pure_server.model.dto.BookDTO;
 import pure_server.model.dto.responses.BookResponseDto;
 import pure_server.service.IBookService;
 
@@ -46,7 +46,7 @@ public class HttpContextHolder {
 
             switch (requestMethod) {
                 case GET: {
-                    Book result = bookService.getBookById(Integer.parseInt(params.get("id")));
+                    BookDTO result = bookService.getBookById(params.get("id"));
                     if (result != null) {
                         bookResponseBuilder.addPayload(objectMapper.writeValueAsString(result)).addTextResult(SUCCESS);
                     } else {
@@ -55,7 +55,7 @@ public class HttpContextHolder {
                     break;
                 }
                 case POST: {
-                    Book parsedBookFromBodyRequest = parseUtils.parseObjectFromRequestBody(exchange, Book.class);
+                    BookDTO parsedBookFromBodyRequest = parseUtils.parseObjectFromRequestBody(exchange, BookDTO.class);
                     if (parsedBookFromBodyRequest == null) {
                         httpUtils.handleNonSuccess(400, exchange);
                     } else {
@@ -68,7 +68,7 @@ public class HttpContextHolder {
                     break;
                 }
                 case PUT: {
-                    Book parsedBookFromBodyRequest = parseUtils.parseObjectFromRequestBody(exchange, Book.class);
+                    BookDTO parsedBookFromBodyRequest = parseUtils.parseObjectFromRequestBody(exchange, BookDTO.class);
                     if (parsedBookFromBodyRequest == null) {
                         httpUtils.handleNonSuccess(400, exchange);
                     } else {
@@ -77,11 +77,11 @@ public class HttpContextHolder {
                     break;
                 }
                 case PATCH: {
-                    Book parsedBookFromBodyRequest = parseUtils.parseObjectFromRequestBody(exchange, Book.class);
+                    BookDTO parsedBookFromBodyRequest = parseUtils.parseObjectFromRequestBody(exchange, BookDTO.class);
                     if (parsedBookFromBodyRequest == null) {
                         httpUtils.handleNonSuccess(400, exchange);
                     } else {
-                        httpUtils.addSuccessStringToResponse(bookResponseBuilder, bookService.updateBook(parsedBookFromBodyRequest));
+                        httpUtils.addSuccessStringToResponse(bookResponseBuilder, bookService.updateBook(params.get("id"), parsedBookFromBodyRequest));
                     }
                     break;
                 }
@@ -98,7 +98,7 @@ public class HttpContextHolder {
         return exchange -> {
             BookResponseDto.BookResponseBuilder bookResponseBuilder = new BookResponseDto.BookResponseBuilder().addTimeStamp(Instant.now().toEpochMilli());
             if (exchange.getRequestMethod().equals(GET)) {
-                List<Book> allBooks = bookService.getAllBooks();
+                List<BookDTO> allBooks = bookService.getAllBooks();
                 bookResponseBuilder = bookResponseBuilder.addTextResult(SUCCESS).addPayload(objectMapper.writeValueAsString(allBooks));
             } else {
                 httpUtils.handleNonSuccess(405, exchange);

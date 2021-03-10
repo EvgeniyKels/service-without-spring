@@ -1,4 +1,4 @@
-package pure_server.model.repo;
+package pure_server.model.repo.auth;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoCollection;
@@ -11,7 +11,7 @@ import static pure_server.config.constants.RepositoriesConstants.USER_COLLECTION
 import static pure_server.config.constants.RepositoriesConstants.USER_NAME_COLUMN;
 
 public class UserCollectionRepoImpl implements UserCollectionRepo{
-    private MongoDatabase authDb;
+    private final MongoDatabase authDb;
 
     public UserCollectionRepoImpl(MongoDatabase authDb) {
         this.authDb = authDb;

@@ -1,4 +1,4 @@
-package pure_server.config;
+package pure_server.config.properties_reader;
 
 import java.util.Properties;
 

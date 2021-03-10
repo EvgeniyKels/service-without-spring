@@ -1,15 +1,16 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mindrot.jbcrypt.BCrypt;
 import org.mockito.Mock;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import org.mockito.junit.jupiter.MockitoExtension;
-import pure_server.authentification.ServerAuthentication;
+import pure_server.authentification.ServerAuthenticationImpl;
 import pure_server.model.entities.User;
-import pure_server.model.repo.UserCollectionRepo;
+import pure_server.model.repo.auth.UserCollectionRepo;
 
 @ExtendWith(MockitoExtension.class)
 public class ServerAuthenticationTest {
@@ -18,14 +19,14 @@ public class ServerAuthenticationTest {
     private static final String WRONG_PASS = "wrong_pass";
     private static final String WRONG_USER_NAME = "wrong_user_name";
     private final String REALM = "realm";
-    private ServerAuthentication serverAuthentication;
+    private ServerAuthenticationImpl serverAuthentication;
 
     @Mock
     private UserCollectionRepo userCollectionRepo;
 
     @BeforeEach
     void beforeEach() {
-        serverAuthentication = new ServerAuthentication(REALM, userCollectionRepo);
+        serverAuthentication = new ServerAuthenticationImpl(REALM, userCollectionRepo);
         assertNotNull(userCollectionRepo);
     }
 
@@ -36,7 +37,7 @@ public class ServerAuthenticationTest {
     }
 
     private User getExistingUser() {
-        return new User("user_id", CORRECT_USER_NAME, CORRECT_PASS);
+        return new User("user_id", CORRECT_USER_NAME, BCrypt.hashpw(CORRECT_PASS, BCrypt.gensalt(12)));
     }
 
     @Test

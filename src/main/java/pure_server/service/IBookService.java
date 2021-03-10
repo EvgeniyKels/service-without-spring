@@ -1,14 +1,14 @@
 package pure_server.service;
 
-import pure_server.model.dto.Book;
+import pure_server.model.dto.BookDTO;
 
 import java.util.List;
 
 public interface IBookService {
-    boolean insertBook(Book book);
-    boolean updateBook(Book book);
-    List<Book> getAllBooks();
-    Book getBookById(int bookId);
+    String insertBook(BookDTO book);
+    boolean updateBook(String bookId, BookDTO book);
+    List<BookDTO> getAllBooks();
+    BookDTO getBookById(String bookId);
     boolean removeBook(int name);
-    boolean replaceBook(Book book);
+    boolean replaceBook(BookDTO book);
 }

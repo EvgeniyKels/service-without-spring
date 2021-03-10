@@ -1,10 +1,10 @@
-package pure_server.config;
+package pure_server.config.properties_reader;
 
 import java.io.*;
 import java.util.Objects;
 import java.util.Properties;
 
-public class PropertiesReader implements IPropertiesReader{
+public class PropertiesReader implements IPropertiesReader {
     @Override
     public Properties receiveInitialProperties() {
 

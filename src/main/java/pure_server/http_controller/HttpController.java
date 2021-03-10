@@ -1,14 +1,12 @@
 package pure_server.http_controller;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mongodb.client.MongoDatabase;
 import com.sun.net.httpserver.*;
-import pure_server.authentification.ServerAuthentication;
+import pure_server.authentification.ServerAuthenticationImpl;
 import pure_server.http_controller.http_contexts.HttpContextHolder;
 import pure_server.http_controller.http_controller_utils.HttpUtils;
 import pure_server.http_controller.http_controller_utils.ParseUtils;
-import pure_server.model.repo.UserCollectionRepoImpl;
+import pure_server.model.repo.auth.UserCollectionRepo;
 import pure_server.service.IBookService;
 
 public class HttpController {
@@ -16,14 +14,12 @@ public class HttpController {
     private final HttpContextHolder httpContextHolder;
     private final Authenticator authenticator;
 
-    public HttpController(HttpServer server, IBookService bookService, MongoDatabase mongoDatabase) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+    public HttpController(HttpServer server, IBookService bookService, UserCollectionRepo userCollectionRepo, ObjectMapper om) {
         this.server = server;
-        ParseUtils parseUtils = new ParseUtils(objectMapper);
-        HttpUtils httpUtils = new HttpUtils(objectMapper);
-        this.httpContextHolder = new HttpContextHolder(bookService, parseUtils, httpUtils, objectMapper);
-        this.authenticator = new ServerAuthentication("realm", new UserCollectionRepoImpl(mongoDatabase));
+        ParseUtils parseUtils = new ParseUtils(om);
+        HttpUtils httpUtils = new HttpUtils(om);
+        this.httpContextHolder = new HttpContextHolder(bookService, parseUtils, httpUtils, om);
+        this.authenticator = new ServerAuthenticationImpl("realm", userCollectionRepo);
         createApi();
     }
 
