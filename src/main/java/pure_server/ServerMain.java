@@ -13,6 +13,9 @@ import java.util.logging.Logger;
 import static pure_server.config.constants.PropertiesConstant.*;
 
 public class ServerMain {
+    /**
+     *
+     */
     private static final Logger LOGGER = Logger.getLogger(ServerMain.class.getSimpleName());
     public static void main(String[] args) {
 
