@@ -64,24 +64,16 @@ public class HttpContextHolder {
                     break;
                 }
                 case DELETE: {
-                    httpUtils.addSuccessStringToResponse(bookResponseBuilder, bookService.removeBook(Integer.parseInt(params.get("id"))));
+                    httpUtils.addSuccessStringToResponse(bookResponseBuilder, bookService.removeBookById(params.get("id")));
                     break;
                 }
-                case PUT: {
-                    BookDTO parsedBookFromBodyRequest = parseUtils.parseObjectFromRequestBody(exchange, BookDTO.class);
-                    if (parsedBookFromBodyRequest == null) {
-                        httpUtils.handleNonSuccess(400, exchange);
-                    } else {
-                        httpUtils.addSuccessStringToResponse(bookResponseBuilder, bookService.replaceBook(parsedBookFromBodyRequest));
-                    }
-                    break;
-                }
+                case PUT:
                 case PATCH: {
                     BookDTO parsedBookFromBodyRequest = parseUtils.parseObjectFromRequestBody(exchange, BookDTO.class);
                     if (parsedBookFromBodyRequest == null) {
                         httpUtils.handleNonSuccess(400, exchange);
                     } else {
-                        httpUtils.addSuccessStringToResponse(bookResponseBuilder, bookService.updateBook(params.get("id"), parsedBookFromBodyRequest));
+                        httpUtils.addSuccessStringToResponse(bookResponseBuilder, bookService.updateBook(parsedBookFromBodyRequest));
                     }
                     break;
                 }

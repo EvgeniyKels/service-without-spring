@@ -5,10 +5,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.client.MongoDatabase;
 import pure_server.config.properties_reader.IPropertiesReader;
 import pure_server.config.properties_reader.PropertiesReader;
-import pure_server.model.repo.auth.UserCollectionRepo;
-import pure_server.model.repo.auth.UserCollectionRepoImpl;
-import pure_server.model.repo.main.BookCollectionRepo;
-import pure_server.model.repo.main.BookCollectionRepoImpl;
+import pure_server.dao.auth.UserCollectionRepo;
+import pure_server.dao.auth.UserCollectionRepoImpl;
+import pure_server.dao.main.BookCollectionRepo;
+import pure_server.dao.main.BookCollectionRepoImpl;
 
 import java.util.Properties;
 

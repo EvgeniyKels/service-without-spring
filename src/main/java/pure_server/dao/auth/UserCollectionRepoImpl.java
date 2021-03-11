@@ -1,4 +1,4 @@
-package pure_server.model.repo.auth;
+package pure_server.dao.auth;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoCollection;

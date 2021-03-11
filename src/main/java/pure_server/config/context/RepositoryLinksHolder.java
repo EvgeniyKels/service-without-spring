@@ -2,10 +2,10 @@ package pure_server.config.context;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.client.MongoDatabase;
-import pure_server.model.repo.auth.UserCollectionRepo;
-import pure_server.model.repo.auth.UserCollectionRepoImpl;
-import pure_server.model.repo.main.BookCollectionRepo;
-import pure_server.model.repo.main.BookCollectionRepoImpl;
+import pure_server.dao.auth.UserCollectionRepo;
+import pure_server.dao.auth.UserCollectionRepoImpl;
+import pure_server.dao.main.BookCollectionRepo;
+import pure_server.dao.main.BookCollectionRepoImpl;
 
 //TODO scan repo package and init all repos by reflection
 public class RepositoryLinksHolder {

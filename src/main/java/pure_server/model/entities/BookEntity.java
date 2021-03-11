@@ -1,17 +1,23 @@
 package pure_server.model.entities;
 
-import org.bson.Document;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.bson.types.ObjectId;
 
 import java.util.UUID;
 
 public class BookEntity {
-    private final String id;
+    @JsonIgnore
+    private ObjectId _id;
+    private String id;
     private String author;
     private String bookName;
     private String description;
 
-    public BookEntity(String author, String bookName, String description) {
-        this.id = UUID.randomUUID().toString();
+    public BookEntity() {
+    }
+
+    public BookEntity(String id, String author, String bookName, String description) {
+        this.id = id == null ? UUID.randomUUID().toString() : id;
         this.author = author;
         this.bookName = bookName;
         this.description = description;
@@ -31,17 +37,5 @@ public class BookEntity {
 
     public String getDescription() {
         return description;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
-    public void setBookName(String bookName) {
-        this.bookName = bookName;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 }

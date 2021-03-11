@@ -1,14 +1,7 @@
 package pure_server;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mongodb.client.MongoDatabase;
 import com.sun.net.httpserver.HttpServer;
 import pure_server.config.context.AppContext;
-import pure_server.config.properties_reader.IPropertiesReader;
-import pure_server.config.context.MongoConfig;
-import pure_server.config.properties_reader.PropertiesReader;
-import pure_server.config.context.RepositoryLinksHolder;
 import pure_server.http_controller.HttpController;
 import pure_server.service.BookService;
 

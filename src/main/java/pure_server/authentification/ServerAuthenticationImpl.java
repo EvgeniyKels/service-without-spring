@@ -3,7 +3,7 @@ package pure_server.authentification;
 import com.sun.net.httpserver.BasicAuthenticator;
 import org.mindrot.jbcrypt.BCrypt;
 import pure_server.model.entities.User;
-import pure_server.model.repo.auth.UserCollectionRepo;
+import pure_server.dao.auth.UserCollectionRepo;
 
 public class ServerAuthenticationImpl extends BasicAuthenticator {
     private final UserCollectionRepo userCollectionRepo;

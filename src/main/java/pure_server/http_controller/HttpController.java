@@ -6,7 +6,7 @@ import pure_server.authentification.ServerAuthenticationImpl;
 import pure_server.http_controller.http_contexts.HttpContextHolder;
 import pure_server.http_controller.http_controller_utils.HttpUtils;
 import pure_server.http_controller.http_controller_utils.ParseUtils;
-import pure_server.model.repo.auth.UserCollectionRepo;
+import pure_server.dao.auth.UserCollectionRepo;
 import pure_server.service.IBookService;
 
 public class HttpController {

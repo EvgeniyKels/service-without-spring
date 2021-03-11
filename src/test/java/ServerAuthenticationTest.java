@@ -10,7 +10,7 @@ import static org.mockito.Mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 import pure_server.authentification.ServerAuthenticationImpl;
 import pure_server.model.entities.User;
-import pure_server.model.repo.auth.UserCollectionRepo;
+import pure_server.dao.auth.UserCollectionRepo;
 
 @ExtendWith(MockitoExtension.class)
 public class ServerAuthenticationTest {
