@@ -8,21 +8,19 @@ import com.mongodb.client.MongoDatabase;
 import static com.mongodb.client.model.Filters.*;
 import static com.mongodb.client.model.Updates.*;
 
+import com.mongodb.client.model.Filters;
 import com.mongodb.client.result.DeleteResult;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 import pure_server.model.entities.BookEntity;
+
 import static pure_server.config.constants.RepositoriesConstants.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class BookCollectionRepoImpl implements BookCollectionRepo {
-    private static final String OBJECT_ID = "_id";
-    private static final String BOOK_DID_NOT_INSERT = "book did not insert";
-    private static final String BOOK_CANT_BE_UPDATE = "book cant be update";
-    private static final String WRONG_FORMAT_OF_THE_GIVEN_DTO = "wrong format of the given dto";
     private final MongoCollection<Document> bookCollection;
     private final ObjectMapper om;
     public BookCollectionRepoImpl(MongoDatabase mainDb, ObjectMapper om) {
@@ -31,9 +29,17 @@ public class BookCollectionRepoImpl implements BookCollectionRepo {
     }
     @Override
     public String insertNewBook(BookEntity bookEntity) {
-        Document book = new Document(OBJECT_ID, new ObjectId());
-        book.putAll(om.convertValue(bookEntity, Map.class));
-        bookCollection.insertOne(book);
+        Objects.requireNonNull(bookEntity);
+        if (bookEntity.getId() != null) {
+            Document first = bookCollection.find(eq(ID_COLUMN_NAME, bookEntity.getId())).first();
+            if (first == null) {
+                Document book = new Document(OBJECT_ID, new ObjectId());
+                book.putAll(om.convertValue(bookEntity, Map.class));
+                bookCollection.insertOne(book);
+            } else {
+                return WRONG_FORMAT_OF_THE_GIVEN_DTO;
+            }
+        }
         Optional<BookEntity> bookOpt = getBookById(bookEntity.getId());
         return bookOpt.isPresent() ? bookOpt.get().getId() : BOOK_DID_NOT_INSERT;
     }
@@ -46,8 +52,9 @@ public class BookCollectionRepoImpl implements BookCollectionRepo {
             return book;
         }).collect(Collectors.toList());
         bookCollection.insertMany(docs);
-        getBooksByIds(books.stream().map(BookEntity::getId).collect(Collectors.toList()));
-        return null;
+        return getBooksByIds(
+                books.stream().map(BookEntity::getId).collect(Collectors.toList())
+        ).stream().map(BookEntity::getId).collect(Collectors.toList());
     }
 
     @Override
@@ -66,6 +73,7 @@ public class BookCollectionRepoImpl implements BookCollectionRepo {
 
     @Override
     public Optional<BookEntity> getBookById(String bookUuid) {
+        Objects.requireNonNull(bookUuid);
         Document first = bookCollection.find(eq(ID_COLUMN_NAME, bookUuid)).first();
         return Optional.ofNullable(fromDocumentToObject(first));
     }

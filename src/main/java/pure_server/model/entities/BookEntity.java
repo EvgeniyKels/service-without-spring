@@ -3,10 +3,10 @@ package pure_server.model.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.bson.types.ObjectId;
 
+import java.util.Objects;
 import java.util.UUID;
 
 public class BookEntity {
-    @JsonIgnore
     private ObjectId _id;
     private String id;
     private String author;
@@ -23,6 +23,11 @@ public class BookEntity {
         this.description = description;
     }
 
+    @JsonIgnore
+    public ObjectId get_id() {
+        return _id;
+    }
+
     public String getId() {
         return id;
     }
@@ -37,5 +42,21 @@ public class BookEntity {
 
     public String getDescription() {
         return description;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BookEntity that = (BookEntity) o;
+        return id.equals(that.id) &&
+                author.equals(that.author) &&
+                bookName.equals(that.bookName) &&
+                description.equals(that.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, author, bookName, description);
     }
 }
