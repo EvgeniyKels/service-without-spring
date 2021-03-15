@@ -80,20 +80,23 @@ public class BookCollectionRepoImpl implements BookCollectionRepo {
 
     @Override
     public Optional<BookEntity> updateBook(BookEntity bookEntity) {
-        BookEntity bookEntityBeforeUpdate = getBookById(bookEntity.getId()).get();
+        BookEntity bookEntityBeforeUpdate = getBookById(bookEntity.getId()).orElseThrow(() -> new NoSuchElementException("book with this uuid not exists"));
         if (!bookEntity.getId().equals(bookEntityBeforeUpdate.getId())) {
             return Optional.empty();
         }
         Bson idEquality = eq(ID_COLUMN_NAME, bookEntity.getId());
         List<Bson>updates = new ArrayList<>();
-        if (!bookEntity.getDescription().equals(bookEntityBeforeUpdate.getDescription())) {
-            updates.add(set(DESCRIPTION_COLUMN_NAME, bookEntity.getDescription()));
+        String description = bookEntity.getDescription();
+        if (description != null && !description.equals(bookEntityBeforeUpdate.getDescription())) {
+            updates.add(set(DESCRIPTION_COLUMN_NAME, description));
         }
-        if (!bookEntity.getBookName().equals(bookEntityBeforeUpdate.getBookName())) {
-            updates.add(set(BOOK_NAME_COLUMN_NAME, bookEntity.getBookName()));
+        String bookName = bookEntity.getBookName();
+        if (bookName != null && !bookName.equals(bookEntityBeforeUpdate.getBookName())) {
+            updates.add(set(BOOK_NAME_COLUMN_NAME, bookName));
         }
-        if (!bookEntity.getAuthor().equals(bookEntityBeforeUpdate.getAuthor())) {
-            updates.add(set(AUTHOR_COLUMN_NAME, bookEntity.getAuthor()));
+        String author = bookEntity.getAuthor();
+        if (author != null && !author.equals(bookEntityBeforeUpdate.getAuthor())) {
+            updates.add(set(AUTHOR_COLUMN_NAME, author));
         }
         bookCollection.updateOne(idEquality, updates);
         return getBookById(bookEntity.getId());
@@ -106,6 +109,7 @@ public class BookCollectionRepoImpl implements BookCollectionRepo {
 
     @Override
     public boolean existById(String id) {
+        Objects.requireNonNull(id);
         return bookCollection.find(eq(ID_COLUMN_NAME, id)).first() != null;
     }
 

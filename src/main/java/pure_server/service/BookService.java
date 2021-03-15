@@ -15,6 +15,7 @@ public class BookService implements IBookService {
 
 
     public BookService(BookCollectionRepo bookCollectionRepo) {
+        Objects.requireNonNull(bookCollectionRepo);
         this.bookCollectionRepo = bookCollectionRepo;
     }
 

@@ -16,10 +16,26 @@ public class BookEntity {
     public BookEntity() {
     }
 
+    public BookEntity(String id) {
+        this.id = id;
+    }
+
     public BookEntity(String id, String author, String bookName, String description) {
         this.id = id == null ? UUID.randomUUID().toString() : id;
         this.author = author;
         this.bookName = bookName;
+        this.description = description;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public void setBookName(String bookName) {
+        this.bookName = bookName;
+    }
+
+    public void setDescription(String description) {
         this.description = description;
     }
 
