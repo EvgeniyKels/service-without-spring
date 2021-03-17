@@ -80,9 +80,6 @@ public class BookCollectionRepoImpl implements BookCollectionRepo {
     @Override
     public Optional<BookEntity> updateBook(BookEntity bookEntity) {
         BookEntity bookEntityBeforeUpdate = getBookById(bookEntity.getId()).orElseThrow(() -> new NoSuchElementException("book with this uuid not exists"));
-        if (!bookEntity.getId().equals(bookEntityBeforeUpdate.getId())) {
-            return Optional.empty();
-        }
         Bson idEquality = eq(ID_COLUMN_NAME, bookEntity.getId());
         List<Bson>updates = new ArrayList<>();
         String description = bookEntity.getDescription();

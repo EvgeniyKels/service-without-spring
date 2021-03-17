@@ -60,6 +60,7 @@ public class BookService implements IBookService {
         Map<BookDTO, String>resMap = new HashMap<>();
         if (!bookCollectionRepo.existById(book.getId())){
             resMap.put(book, BOOK_WITH_GIVEN_ID_NOT_EXISTS);
+            return resMap;
         }
         if (bookCollectionRepo.updateBook(mapDtoToEntity(book)).map(this::mapEntityToDto).orElse(null) == null) {
             resMap.put(book, ERROR_ON_UPDATE);
@@ -82,6 +83,7 @@ public class BookService implements IBookService {
         Map<String, String>resMap = new HashMap<>();
         if (bookId.length() == 0) {
             resMap.put(bookId, WRONG_FORMAT_OF_THE_REQUEST_BODY);
+            return resMap;
         }
         if (bookCollectionRepo.deleteById(bookId).getDeletedCount() == 1) {
             resMap.put(bookId, REMOVED);
