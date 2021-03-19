@@ -24,7 +24,8 @@ public class HttpController {
     }
 
     private void createApi() {
-        server.createContext("/api/book", httpContextHolder.getBookHandler()).setAuthenticator(authenticator);
+        server.createContext("/api/book", httpContextHolder.getBookHandler());
+//        server.createContext("/api/book", httpContextHolder.getBookHandler()).setAuthenticator(authenticator);
         server.createContext("/api/books", httpContextHolder.getBooksHandler()).setAuthenticator(authenticator);
     }
 }

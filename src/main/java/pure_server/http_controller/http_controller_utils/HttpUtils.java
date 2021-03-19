@@ -13,18 +13,12 @@ public class HttpUtils {
     public HttpUtils(ObjectMapper objectMapper) {
     }
     public void addSuccessStringToResponse(BookResponseDto.BookResponseBuilder bookResponseBuilder, Object result) {
-        if(result instanceof Boolean) {
-            if ((Boolean) result) {
-                bookResponseBuilder.addTextResult(SUCCESS);
-            } else {
-                bookResponseBuilder.addTextResult(NON_SUCCESS);
-            }
-        } else if (result instanceof String) {
+        if (result != null) {
+            //TODO
             bookResponseBuilder.addTextResult(SUCCESS);
-        } else if (result == null) {
+        } else {
             bookResponseBuilder.addTextResult(NON_SUCCESS);
         }
-
     }
 
     public void handleSuccess(HttpExchange exchange, String body) throws IOException {

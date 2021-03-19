@@ -42,7 +42,8 @@ public class HttpContextHolder {
 
             LOGGER.info("received \n" +
                     requestMethod + " " + exchange.getProtocol()
-                    + " " + exchange.getRequestURI() + "\n" + exchange.getRequestHeaders().entrySet() + "\n");
+                    + " " + exchange.getRequestURI() + "\n" + exchange.getRequestHeaders().entrySet() +
+                    "\n" + "\nrequest body length " + exchange.getRequestBody().available());
 
             switch (requestMethod) {
                 case GET: {

@@ -8,6 +8,9 @@ public class BookDTO {
     private String bookName;
     private String description;
 
+    public BookDTO() {
+    }
+
     public BookDTO(String id, String author, String bookName, String description) {
         this.id = id;
         this.author = author;

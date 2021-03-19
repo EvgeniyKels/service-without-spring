@@ -16,6 +16,7 @@ public class ServerAuthenticationImpl extends BasicAuthenticator {
     @Override
     public boolean checkCredentials(String username, String passCandidate) {
         User mongoUser = userCollectionRepo.getUserByName(username);
+        System.out.println(mongoUser);
         return mongoUser != null && BCrypt.checkpw(passCandidate, mongoUser.getPasswordHash());
     }
 }
