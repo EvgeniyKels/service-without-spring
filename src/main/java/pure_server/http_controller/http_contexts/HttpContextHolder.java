@@ -16,8 +16,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
-import static pure_server.config.constants.HttpControllerConstants.NON_SUCCESS;
-import static pure_server.config.constants.HttpControllerConstants.SUCCESS;
+import static pure_server.config.constants.BookServiceConstants.NON_SUCCESS;
+import static pure_server.config.constants.BookServiceConstants.SUCCESS;
 import static pure_server.config.constants.HttpMethods.*;
 
 public class HttpContextHolder {

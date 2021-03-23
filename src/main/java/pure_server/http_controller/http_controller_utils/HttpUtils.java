@@ -6,8 +6,9 @@ import pure_server.model.dto.responses.BookResponseDto;
 
 import java.io.IOException;
 
-import static pure_server.config.constants.HttpControllerConstants.NON_SUCCESS;
-import static pure_server.config.constants.HttpControllerConstants.SUCCESS;
+import static pure_server.config.constants.BookServiceConstants.NON_SUCCESS;
+import static pure_server.config.constants.BookServiceConstants.SUCCESS;
+
 
 public class HttpUtils {
     public HttpUtils(ObjectMapper objectMapper) {

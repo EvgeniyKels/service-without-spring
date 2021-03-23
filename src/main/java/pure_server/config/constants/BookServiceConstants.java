@@ -9,4 +9,6 @@ public interface BookServiceConstants {
     String ERROR_ON_REMOVE = "error on remove";
     String ERROR_ON_UPDATE = "error on update";
     String UPDATED = "updated";
+    String SUCCESS = "success";
+    String NON_SUCCESS = "non success";
 }
