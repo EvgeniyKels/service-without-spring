@@ -18,9 +18,16 @@
         <mockito.version>3.7.7</mockito.version>
         <jupiter.version>5.7.0</jupiter.version>
         <mongo.driver.version>3.12.8</mongo.driver.version>
+        <nimbus.version>9.7</nimbus.version>
+        <java_jwt.version>3.14.0</java_jwt.version>
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>com.nimbusds</groupId>
+            <artifactId>nimbus-jose-jwt</artifactId>
+            <version>${nimbus.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.glassfish.jaxb</groupId>
             <artifactId>jaxb-runtime</artifactId>
@@ -63,5 +70,10 @@
             <artifactId>jbcrypt</artifactId>
             <version>0.4</version>
         </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.auth0</groupId>-->
+<!--            <artifactId>java-jwt</artifactId>-->
+<!--            <version>${java_jwt.version}</version>-->
+<!--        </dependency>-->
     </dependencies>
 </project>

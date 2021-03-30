@@ -32,3 +32,6 @@ dependency-reduced-pom.xml
 buildNumber.properties
 .mvn/timing.properties
 .mvn/wrapper/maven-wrapper.jar
+
+JWK_explanation.docx
+~$K_explanation.docx

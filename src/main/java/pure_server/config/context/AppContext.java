@@ -82,4 +82,8 @@ public final class AppContext {
     public MongoDatabase getMainDb() {
         return mainDb;
     }
+
+    public String getJwkSetUrl() {
+        return properties.getProperty(JWK_SET_URL);
+    }
 }
