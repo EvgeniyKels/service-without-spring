@@ -8,6 +8,7 @@ public interface PropertiesConstant {
     String MAIN_DB_NAME = "main_db_name";
     String PASS = "pass";
     String SERVER_PORT = "server_port";
+    String JWK_SET_URL = "key_set.url";
     String ENV = "env";
     String INITIAL_INSERT = "initial_insert";
     String INITIAL_DATA = "initial_data";
